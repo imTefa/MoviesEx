@@ -1,4 +1,4 @@
-package com.example.movies.presentation.movies
+package com.example.movies.presentation.ui.movies
 
 import androidx.recyclerview.widget.DiffUtil
 

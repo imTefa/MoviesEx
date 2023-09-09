@@ -1,4 +1,4 @@
-package com.example.movies.data.models.movie
+package com.example.movies.data.models.movie.popular
 
 data class PopularMovie(
   val id: Long,

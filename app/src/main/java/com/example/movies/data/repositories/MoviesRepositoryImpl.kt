@@ -4,8 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.movies.data.datasources.MoviesRemoteDataSource
 import com.example.movies.data.datasources.PopularMoviesPaginationRemoteDS
-import com.example.movies.data.models.movie.PopularMovie
+import com.example.movies.data.models.movie.details.MovieDetails
 import com.example.movies.data.models.movie.map
+import com.example.movies.data.models.movie.popular.PopularMovie
 import com.example.movies.data.utils.resource.NetworkResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -31,5 +32,11 @@ class MoviesRepositoryImpl(
                 enablePlaceholders = false
             ), pagingSourceFactory = { pagingDataSource.createPagingSource() }
         )
+    }
+
+    override suspend fun getMovieDetails(id: Long): NetworkResource<MovieDetails> {
+        return withContext(dispatcher) {
+            dataSource.getMovieDetails(id).map { it.map() }
+        }
     }
 }

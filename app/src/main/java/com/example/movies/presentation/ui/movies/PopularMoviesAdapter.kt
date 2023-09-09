@@ -1,4 +1,4 @@
-package com.example.movies.presentation.movies
+package com.example.movies.presentation.ui.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.databinding.ListItemMovieBinding
 
-class PopularMoviesAdapter :
+class PopularMoviesAdapter(private val listener: MovieClickListener) :
     PagingDataAdapter<PopularMoviesUiState.MoviesUiState, PopularMoviesAdapter.Holder>(
         PopularMovieUiStateItemCallback()
     ) {
@@ -14,7 +14,13 @@ class PopularMoviesAdapter :
     inner class Holder(private val binding: ListItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.movie = getItem(position)
+            val item = getItem(position)
+            binding.movie = item
+            binding.root.setOnClickListener {
+                listener.onMovieItemClicked(
+                    item?.id ?: return@setOnClickListener
+                )
+            }
         }
     }
 

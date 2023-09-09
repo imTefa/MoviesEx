@@ -1,7 +1,7 @@
 package com.example.movies.data.datasources
 
 import com.example.movies.data.base.BasePagingDataSource
-import com.example.movies.data.models.movie.PopularMovie
+import com.example.movies.data.models.movie.popular.PopularMovie
 import com.example.movies.data.models.movie.map
 import com.example.movies.data.network.IoDispatcher
 import com.example.movies.data.utils.resource.Status

@@ -1,10 +1,11 @@
-package com.example.movies.presentation.movies
+package com.example.movies.presentation.ui.movies
 
 import android.content.Context
 import androidx.paging.PagingData
 import com.example.movies.R
-import com.example.movies.data.models.movie.PopularMovie
+import com.example.movies.data.models.movie.popular.PopularMovie
 import com.example.movies.presentation.base.BaseUiState
+import com.example.movies.presentation.utils.ImagePathAttacher
 
 data class PopularMoviesUiState(
     val list: PagingData<MoviesUiState>
@@ -20,7 +21,7 @@ data class PopularMoviesUiState(
     ) {
 
         fun getImageUrl(context: Context): String{
-            return context.getString(R.string.image_url) + imageUrl
+            return ImagePathAttacher.attachImageBaseUrl(context,imageUrl)
         }
 
         fun getRate(): String {

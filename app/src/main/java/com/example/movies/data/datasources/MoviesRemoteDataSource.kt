@@ -1,5 +1,6 @@
 package com.example.movies.data.datasources
 
+import com.example.movies.data.models.movie.details.MovieDetailsDto
 import com.example.movies.data.models.responses.PopularMoviesResponse
 import com.example.movies.data.network.Api
 import com.example.movies.data.network.handleRetrofitApiCall
@@ -15,6 +16,12 @@ class MoviesRemoteDataSource @Inject constructor(
     suspend fun getMovies(page: Int = 1): NetworkResource<PopularMoviesResponse> {
         return handleRetrofitApiCall {
             api.getPopularMovies(page)
+        }
+    }
+
+    suspend fun getMovieDetails(id: Long): NetworkResource<MovieDetailsDto>{
+        return handleRetrofitApiCall {
+            api.getMovieDetails(id)
         }
     }
 }

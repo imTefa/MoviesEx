@@ -1,4 +1,4 @@
-package com.example.movies.presentation.movies
+package com.example.movies.presentation.ui.movies
 
 import androidx.paging.map
 import com.example.movies.domain.usecases.PopularMoviesUseCase
@@ -20,11 +20,11 @@ class PopularMoviesViewModel @Inject constructor(
 
 
     fun loadPopularMovies() {
-        launchInViewModelScope {
-            popularMoviesUseCase.invoke().collectLatest {
+        launchInViewModelScope {scope->
+            popularMoviesUseCase.invoke(scope).collectLatest {
                 triggerUiState(PopularMoviesUiState(
                     list = it.map { movie ->
-                        PopularMoviesUiState.MoviesUiState.fromMovie(movie)
+                        PopularUiStateMapper.fromModel(movie)
                     }
                 ))
             }

@@ -1,6 +1,6 @@
 package com.example.movies.data.models.responses
 
-import com.example.movies.data.models.movie.PopularMovieDTO
+import com.example.movies.data.models.movie.popular.PopularMovieDTO
 import com.google.gson.annotations.SerializedName
 
 class PopularMoviesResponse(

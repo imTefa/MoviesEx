@@ -1,9 +1,10 @@
-package com.example.movies.presentation.movies
+package com.example.movies.presentation.ui.movies
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.movies.R
 import com.example.movies.databinding.FragmentPopularMoviesBinding
@@ -14,10 +15,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
+class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>(), MovieClickListener {
 
     private val viewModel by viewModels<PopularMoviesViewModel>()
-    private val adapter = PopularMoviesAdapter()
+    private val adapter = PopularMoviesAdapter(this)
     override val layout: Int
         get() = R.layout.fragment_popular_movies
 
@@ -50,5 +51,13 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
             }
         }
 
+    }
+
+    override fun onMovieItemClicked(id: Long) {
+        findNavController().navigate(
+            PopularMoviesFragmentDirections.actionPopularMoviesFragmentToMovieDetailsFragment(
+                id
+            )
+        )
     }
 }
