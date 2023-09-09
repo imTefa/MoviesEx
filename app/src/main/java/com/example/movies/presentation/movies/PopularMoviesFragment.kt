@@ -1,31 +1,47 @@
 package com.example.movies.presentation.movies
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.movies.R
 import com.example.movies.databinding.FragmentPopularMoviesBinding
+import com.example.movies.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularMoviesFragment : Fragment() {
+class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
-    private lateinit var binding: FragmentPopularMoviesBinding
     private val viewModel by viewModels<PopularMoviesViewModel>()
+    override val layout: Int
+        get() = R.layout.fragment_popular_movies
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentPopularMoviesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadPopularMovies()
+    }
+
+    override fun observeUiState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state().collectLatest {
+
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.errorUiState().collectLatest {
+                showErrorIndicator(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.loadingState().collectLatest {
+                showLoadingIndicator(it)
+            }
+        }
+
     }
 }

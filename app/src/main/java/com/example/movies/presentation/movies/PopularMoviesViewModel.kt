@@ -33,7 +33,6 @@ class PopularMoviesViewModel @Inject constructor(
                             )
                         )
                     }
-
                     else -> {
                         triggerErrorState(it.errorMessage)
                     }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MoviesEx</string>
     <string name="error_common_message">An error occurred</string>
+    <string name="loading_indicator">Loading...</string>
 </resources>
