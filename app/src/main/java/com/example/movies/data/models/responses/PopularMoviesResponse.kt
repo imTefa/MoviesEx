@@ -9,5 +9,5 @@ class PopularMoviesResponse(
     val totalPages: Int,
     @SerializedName("total_results")
     val totalResults: Int,
-    val result: List<PopularMovieDTO>
+    val results: List<PopularMovieDTO>
 ): AppBaseResponse()

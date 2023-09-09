@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
     private val viewModel by viewModels<PopularMoviesViewModel>()
+    private val adapter = PopularMoviesAdapter()
     override val layout: Int
         get() = R.layout.fragment_popular_movies
 
@@ -22,12 +23,13 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadPopularMovies()
+        binding.list.adapter = adapter
     }
 
     override fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state().collectLatest {
-
+                adapter.submitList(it.list)
             }
         }
 

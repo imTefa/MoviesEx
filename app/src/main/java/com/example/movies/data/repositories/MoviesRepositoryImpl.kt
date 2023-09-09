@@ -15,7 +15,7 @@ class MoviesRepositoryImpl(
     override suspend fun getPopularMovies(): NetworkResource<List<PopularMovie>> {
         return withContext(dispatcher) {
             dataSource.getMovies().map { res ->
-                res.result.map { it.map() }
+                res.results.map { it.map() }
             }
         }
     }
