@@ -26,6 +26,7 @@ android {
         debug {
             resValue("string", "api_authurization", localProperties['api_authurization'])
             resValue("string", "base_url", "https://api.themoviedb.org")
+            resValue("string", "image_url", "https://image.tmdb.org/t/p/original/")
         }
         release {
             minifyEnabled false
