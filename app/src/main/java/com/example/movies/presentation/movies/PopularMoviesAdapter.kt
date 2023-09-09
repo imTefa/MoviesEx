@@ -2,12 +2,12 @@ package com.example.movies.presentation.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.databinding.ListItemMovieBinding
 
 class PopularMoviesAdapter :
-    ListAdapter<PopularMoviesUiState.MoviesUiState, PopularMoviesAdapter.Holder>(
+    PagingDataAdapter<PopularMoviesUiState.MoviesUiState, PopularMoviesAdapter.Holder>(
         PopularMovieUiStateItemCallback()
     ) {
 

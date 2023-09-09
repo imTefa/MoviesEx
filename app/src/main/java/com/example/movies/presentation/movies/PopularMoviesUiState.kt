@@ -1,12 +1,13 @@
 package com.example.movies.presentation.movies
 
 import android.content.Context
+import androidx.paging.PagingData
 import com.example.movies.R
 import com.example.movies.data.models.movie.PopularMovie
 import com.example.movies.presentation.base.BaseUiState
 
 data class PopularMoviesUiState(
-    val list: List<MoviesUiState>
+    val list: PagingData<MoviesUiState>
 ) : BaseUiState() {
 
 

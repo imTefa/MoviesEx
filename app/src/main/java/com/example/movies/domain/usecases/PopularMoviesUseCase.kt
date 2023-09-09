@@ -1,5 +1,6 @@
 package com.example.movies.domain.usecases
 
+import androidx.paging.PagingData
 import com.example.movies.data.models.movie.PopularMovie
 import com.example.movies.data.models.movie.PopularMovieDTO
 import com.example.movies.data.network.IoDispatcher
@@ -17,10 +18,8 @@ class PopularMoviesUseCase @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    operator fun invoke(): Flow<NetworkResource<List<PopularMovie>>> {
-        return flow {
-            emit(moviesRepository.getPopularMovies())
-        }.startWithLoadingResult().flowOn(dispatcher)
+    suspend operator fun invoke(): Flow<PagingData<PopularMovie>>{
+        return moviesRepository.getPopularMoviesPaged().flow.flowOn(dispatcher)
     }
 
 }

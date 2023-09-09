@@ -5,14 +5,16 @@ import com.example.movies.data.network.Api
 import com.example.movies.data.network.handleRetrofitApiCall
 import com.example.movies.data.utils.resource.NetworkResource
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MoviesRemoteDataSource @Inject constructor(
     private val api: Api
 ) {
 
-    suspend fun getMovies(): NetworkResource<PopularMoviesResponse> {
+    suspend fun getMovies(page: Int = 1): NetworkResource<PopularMoviesResponse> {
         return handleRetrofitApiCall {
-            api.getPopularMovies()
+            api.getPopularMovies(page)
         }
     }
 }

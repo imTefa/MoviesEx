@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.example.movies.R
 import com.example.movies.databinding.FragmentPopularMoviesBinding
 import com.example.movies.presentation.base.BaseFragment
+import com.example.movies.presentation.base.ErrorUiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,19 +31,22 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     override fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state().collectLatest {
-                adapter.submitList(it.list)
+                adapter.submitData(it.list)
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.errorUiState().collectLatest {
-                showErrorIndicator(it)
-            }
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loadingState().collectLatest {
-                showLoadingIndicator(it)
+            adapter.loadStateFlow.collect { loadState ->
+
+                // Show loading spinner during initial load or refresh.
+                showLoadingIndicator(loadState.source.refresh is LoadState.Loading)
+
+                if (loadState.source.refresh is LoadState.Error) {
+                    val error = (loadState.source.refresh as LoadState.Error).error
+                    showErrorIndicator(ErrorUiState(error.localizedMessage))
+                }
+
             }
         }
 
