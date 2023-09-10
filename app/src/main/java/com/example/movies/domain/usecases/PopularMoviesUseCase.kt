@@ -17,7 +17,7 @@ class PopularMoviesUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(scope: CoroutineScope): Flow<PagingData<PopularMovie>>{
-        return moviesRepository.getPopularMoviesPaged().flow.flowOn(dispatcher).cachedIn(scope)
+        return moviesRepository.getPopularMoviesPagedV2().flowOn(dispatcher).cachedIn(scope)
     }
 
 }

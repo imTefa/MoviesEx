@@ -9,11 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.example.movies.presentation.loading.MoviesLoadingDialog
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
 
     protected lateinit var binding: V
     abstract val layout: Int
+
+    val loadingDialogMutex = Mutex()
 
     private var loadingDialog: MoviesLoadingDialog? = null
         get() {
@@ -45,9 +49,10 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
 
     fun showLoadingIndicator(isLoading: Boolean) {
         ///implement whatever loading indicator we need, I chose common loading dialog for this small task
-        if (isLoading)
-            loadingDialog!!.show(childFragmentManager)
-        else loadingDialog!!.dismiss()
+            if (isLoading) {
+                loadingDialog!!.show(childFragmentManager)
+                childFragmentManager.executePendingTransactions()
+            } else loadingDialog!!.dismiss()
     }
 
     fun toast(message: String) {

@@ -38,7 +38,12 @@ class MoviesLoadingDialog : DialogFragment() {
 
     fun show(manager: FragmentManager) {
         if (isAdded.not())
-            show(manager, TAG)
+            try {
+                show(manager, TAG)
+            }catch (e: Exception){
+                //Ignroe
+            }
+
     }
 
     override fun dismiss() {

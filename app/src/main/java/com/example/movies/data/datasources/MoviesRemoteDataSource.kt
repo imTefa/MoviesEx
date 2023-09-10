@@ -8,6 +8,7 @@ import com.example.movies.data.utils.resource.NetworkResource
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 class MoviesRemoteDataSource @Inject constructor(
     private val api: Api

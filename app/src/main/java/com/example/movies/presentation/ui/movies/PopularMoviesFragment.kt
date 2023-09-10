@@ -11,6 +11,7 @@ import com.example.movies.databinding.FragmentPopularMoviesBinding
 import com.example.movies.presentation.base.BaseFragment
 import com.example.movies.presentation.base.ErrorUiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -30,6 +31,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>(), Movi
     }
 
     override fun observeUiState() {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state().collectLatest {
                 adapter.submitData(it.list)

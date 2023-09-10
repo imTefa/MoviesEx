@@ -6,5 +6,4 @@ data class PopularMovie(
   val rate: Double,
   val releaseDate: String,
   val image: String,
-  val overView: String
 )
