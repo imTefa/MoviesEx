@@ -2,7 +2,6 @@ package com.example.movies.data.repositories
 
 import com.example.movies.data.datasources.MoviesMediator
 import com.example.movies.data.datasources.MoviesRemoteDataSource
-import com.example.movies.data.datasources.PopularMoviesPaginationRemoteDS
 import com.example.movies.data.db.MoviesDao
 import com.example.movies.data.network.IoDispatcher
 import dagger.Module
@@ -18,14 +17,12 @@ object ReposModule {
     @Provides
     fun provideMoviesRepo(
         dataSource: MoviesRemoteDataSource,
-        pagingDataSource: PopularMoviesPaginationRemoteDS,
         moviesDao: MoviesDao,
         moviesMediator: MoviesMediator,
         @IoDispatcher dispatcher: CoroutineDispatcher
     ): MoviesRepository {
         return MoviesRepositoryImpl(
             dataSource,
-            pagingDataSource,
             moviesDao,
             moviesMediator,
             dispatcher

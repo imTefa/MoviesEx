@@ -9,10 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
 
-    suspend fun getPopularMovies(): NetworkResource<List<PopularMovie>>
-
-    suspend fun getPopularMoviesPaged(): Pager<Int, PopularMovie>
-
     suspend fun getPopularMoviesPagedV2():  Flow<PagingData<PopularMovie>>
 
     suspend fun getMovieDetails(id: Long): NetworkResource<MovieDetails>

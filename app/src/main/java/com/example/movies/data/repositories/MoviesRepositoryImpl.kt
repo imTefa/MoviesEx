@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.movies.data.datasources.MoviesMediator
 import com.example.movies.data.datasources.MoviesRemoteDataSource
-import com.example.movies.data.datasources.PopularMoviesPaginationRemoteDS
 import com.example.movies.data.db.MoviesDao
 import com.example.movies.data.models.movie.details.MovieDetails
 import com.example.movies.data.models.movie.map
@@ -22,28 +21,10 @@ import kotlinx.coroutines.withContext
 
 class MoviesRepositoryImpl(
     private val dataSource: MoviesRemoteDataSource,
-    private val pagingDataSource: PopularMoviesPaginationRemoteDS,
     private val moviesDao: MoviesDao,
     private val moviesMediator: MoviesMediator,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MoviesRepository {
-
-    override suspend fun getPopularMovies(): NetworkResource<List<PopularMovie>> {
-        return withContext(dispatcher) {
-            dataSource.getMovies().map { res ->
-                res.results.map { it.map() }
-            }
-        }
-    }
-
-    override suspend fun getPopularMoviesPaged(): Pager<Int, PopularMovie> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = false
-            ), pagingSourceFactory = { pagingDataSource.createPagingSource() }
-        )
-    }
 
     @OptIn(ExperimentalPagingApi::class)
     override suspend fun getPopularMoviesPagedV2(): Flow<PagingData<PopularMovie>> {
